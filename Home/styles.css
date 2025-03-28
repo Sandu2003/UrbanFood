@@ -3,14 +3,22 @@ body {
     margin: 0;
     padding: 0;
     line-height: 1.6;
-    background-color: #ed9837;
+    background-color: #ffffff;
 }
-
-header {
-    background: #333;
+.button-container{
+    background: #639BDD;
     color: #fff;
+    text-align: right;
+}
+header {
+    background: #ffffff;
     padding: 10px 0;
-    text-align: center;
+}
+header img {
+    width: ;
+    height: auto;
+    display: block;
+    margin: 0 auto;
 }
 
 header h1 {
@@ -20,6 +28,7 @@ header h1 {
 nav ul {
     list-style: none;
     padding: 0;
+    text-align: center;
 }
 
 nav ul li {
@@ -28,7 +37,7 @@ nav ul li {
 }
 
 nav ul li a {
-    color: #fff;
+    color: #8cb3b9;
     text-decoration: none;
 }
 
@@ -43,7 +52,12 @@ section {
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
-
+.slideshow-container img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    margin: auto;
+}
 .product {
     margin: 10px 0;
 }

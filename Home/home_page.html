@@ -5,10 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UrbanFood</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="scripts.js"></script>
 </head>
 <body>
+    <div class="button-container">
+        <button onclick="location.href='login.html'">Login</button> 
+        <button onclick="location.href='buyer_page.html'">Buyer</button>
+        <button onclick="location.href='seller_page.html'">Seller</button>
+    </div>
     <header>
-        <h1>UrbanFood</h1>
+<img src="../assests/logo.png" alt="UrbanFood Logo" style="height: 150px;" class="logo"> 
         <nav>
             <ul>
                 <li><a href="#home">Home</a></li>
@@ -18,7 +24,31 @@
             </ul>
         </nav>
     </header>
+    <div style="border-top: 2px solid rgb(132, 171, 227); width: 100%; position: absolute; top: ; left: 0;"></div>
     <main>
+        <section id="slideshow">
+            <div class="slideshow-container">
+            <div class="slide fade">
+                <img src="../assests/veges.jpeg" alt="Fresh Fruits">
+                
+            </div>
+            <div class="slide fade">
+                <img src="../assests/lemon.webp" alt="Handmade Crafts" >
+                
+            </div>
+            <div class="slide fade">
+                <img src="../assests/orange.webp" alt="Local Farmers" >
+                
+            </div>
+            <div class="slide fade">
+                <img src="../assests/farmer.jpeg" alt="Local Farmers" >
+                
+            </div>
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+            </div>
+        </section>
+
         <section id="home">
             <h2>Welcome to UrbanFood</h2>
             <p>Your source for fresh, locally produced food and handmade crafts!</p>
