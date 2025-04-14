@@ -14,7 +14,12 @@
             }
 
             function plusSlides(n) {
-            slideIndex += n - 1;
+            slideIndex += n;
+            if (slideIndex > document.getElementsByClassName("slide").length) {
+                slideIndex = 1;
+            } else if (slideIndex < 1) {
+                slideIndex = document.getElementsByClassName("slide").length;
+            }
             showSlides();
             }
      
