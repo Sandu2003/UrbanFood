@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buyer Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="../assests/logo.png" alt="UrbanFood Logo">
+        </div>
+        <nav class="top-nav">
+            <a href="home.html" class="nav-link">Home</a>
+            <select id="dashboardSelect" class="dashboard-select" onchange="navigateDashboard()">
+                <option value="buyer" selected>Buyer</option>
+                <option value="seller">Seller</option>
+            </select>
+        </nav>
+    </header>
+    <main>
+        <aside class="side-nav">
+            <ul>
+                <li><a href="#orders">View Orders</a></li>
+                <li><a href="#account-details">Account Details</a></li>
+            </ul>
+        </aside>
+        <section id="account-details" class="dashboard-content">
+            <h2>Account Details</h2>
+            <div id="accountDetails">
+                <!-- Account details will be dynamically loaded here -->
+            </div>
+        </section>
+        <section id="orders" class="dashboard-content">
+            <h2>Your Orders</h2>
+            <div id="orderList" class="order-list">
+                <!-- Orders will be dynamically loaded here -->
+            </div>
+        </section>
+
+    </main>
+    <footer>
+        <p>&copy; 2025 UrbanFood. All Rights Reserved.</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Dashboard - Change Product</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="../assests/logo.png" alt="UrbanFood Logo">
+        </div>
+        <nav class="top-nav">
+            <a href="home.html" class="nav-link">Home</a>
+            <select id="dashboardSelect" class="dashboard-select" onchange="navigateDashboard()">
+                <option value="seller" selected>Seller</option>
+                <option value="buyer">Buyer</option>
+            </select>
+        </nav>
+    </header>
+    <main>
+        <aside class="side-nav">
+            <ul>
+                <li><a href="Products_sell.html">Add Products</a></li>
+                <li><a href="remove_pro.html">Remove Products</a></li>
+                <li><a href="change_pro.html">Change Products</a></li>
+            </ul>
+        </aside>
+        <section id="change-product" class="dashboard-content">
+            <h2>Change Product Details</h2>
+            <form id="searchProductForm">
+                <label for="searchProductName">Search Product Name</label>
+                <input type="text" id="searchProductName" name="searchProductName" placeholder="Enter product name" required>
+
+                <button type="button" onclick="searchProduct()">Search</button>
+            </form>
+
+            <div id="editProductDetails" class="product-details" style="display: none;">
+                <h3>Edit Product Details</h3>
+                <form id="updateProductForm">
+                    <label for="editProductName">Product Name</label>
+                    <input type="text" id="editProductName" name="editProductName" required>
+
+                    <label for="editCategory">Category</label>
+                    <select id="editCategory" name="editCategory" required>
+                        <option value="fruits">Fruits</option>
+                        <option value="vegetables">Vegetables</option>
+                        <option value="dairy">Dairy Products</option>
+                        <option value="bakedGoods">Baked Goods</option>
+                        <option value="crafts">Handmade Crafts</option>
+                    </select>
+
+                    <label for="editPrice">Price (in USD)</label>
+                    <input type="number" id="editPrice" name="editPrice" step="0.01" required>
+
+                    <label for="editImage">Upload New Product Image</label>
+                    <input type="file" id="editImage" name="editImage" accept="image/*">
+
+                    <button type="submit">Update Product</button>
+                </form>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 UrbanFood. All Rights Reserved.</p>
+    </footer>
+    <script src="scriptC.js"></script>
+</body>
+</html>

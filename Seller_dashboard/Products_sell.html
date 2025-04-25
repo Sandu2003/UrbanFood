@@ -3,16 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seller - Add Products</title>
+    <title>Seller Dashboard - Add Product</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
-        <h1>UrbanFood Seller Portal</h1>
+        <div class="logo">
+            <img src="../assests/logo.png" alt="UrbanFood Logo">
+        </div>
+        <nav class="top-nav">
+            <a href="home.html" class="nav-link">Home</a>
+            <select id="dashboardSelect" class="dashboard-select" onchange="navigateDashboard()">
+                <option value="seller" selected>Seller</option>
+                <option value="buyer">Buyer</option>
+            </select>
+        </nav>
     </header>
     <main>
-        <section id="add-product">
+        <aside class="side-nav">
+            <ul>
+                <li><a href="Products_sell.html">Add Products</a></li>
+                <li><a href="remove_pro.html">Remove Products</a></li>
+                <li><a href="change_pro.html">Change Products</a></li>
+            </ul>
+        </aside>
+        <section id="add-product" class="dashboard-content">
             <h2>Add Your Product</h2>
             <form id="productForm">
                 <label for="productName">Product Name</label>
