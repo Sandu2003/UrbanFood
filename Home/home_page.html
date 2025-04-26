@@ -3,87 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UrbanFood</title>
+    <title>UrbanFood Home</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="scripts.js"></script>
 </head>
 <body>
-    <div class="button-container">
-        <button onclick="location.href='login.html'">Login</button> 
-        <button onclick="location.href='buyer_page.html'">Buyer</button>
-        <button onclick="location.href='seller_page.html'">Seller</button>
-    </div>
-    <header>
-<img src="../assests/logo.png" alt="UrbanFood Logo" style="height: 150px;" class="logo"> 
+    <!-- Header Section -->
+    <header id="top-header">
+        <h1>Welcome to UrbanFood</h1>
+        <div class="header-buttons">
+            <button onclick="location.href='buyer-login.html'">Sign In as Buyer</button>
+            <button onclick="location.href='seller-login.html'">Sign In as Seller</button>
+        </div>
+    </header>
+
+    <!-- Logo & Navbar -->
+    <div id="logo-navbar">
+        <img src="path/to/your-logo.png" alt="UrbanFood Logo" id="logo">
         <nav>
             <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#products">Products</a></li>
                 <li><a href="#about">About Us</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#services">Our Services</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+                <li class="dropdown">
+                    <a href="#">Products ▼</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="fruits.html">Fruits</a></li>
+                        <li><a href="vegetables.html">Vegetables</a></li>
+                        <li><a href="dairy-products.html">Dairy Products</a></li>
+                        <li><a href="baked-goods.html">Baked Goods</a></li>
+                        <li><a href="handmade-crafts.html">Handmade Crafts</a></li>
+                    </ul>
+                </li>
             </ul>
         </nav>
-    </header>
-    <div style="border-top: 2px solid rgb(132, 171, 227); width: 100%; position: absolute; top: ; left: 0;"></div>
-    <main>
-        <section id="slideshow">
-            <div class="slideshow-container">
-            <div class="slide fade">
-                <img src="../assests/veges.jpeg" alt="Fresh Fruits">
-                <div class="text-overlay">Fresh Fruits</div>
-                <img src="../assests/veges.jpeg" alt="Fresh Fruits">
-            </div>
-            <div class="slide fade">
-                <div class="text-overlay">Handmade Crafts</div>
-                <img src="../assests/lemon.webp" alt="Handmade Crafts">
-            </div>
-            <div class="slide fade">
-                <div class="text-overlay">Local Farmers</div>
-                <img src="../assests/melon.jpeg" alt="Local Farmers">
-            </div>
-            <div class="slide fade">
-                <div class="text-overlay">Local Farmers</div>
-                <img src="../assests/farmer 2.webp" alt="Local Farmers">
-            </div>
-            </div>
-        </section>
-            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-            <a class="next" onclick="plusSlides(1)">&#10095;</a>
-            </div>
-        </section>
+    </div>
 
-        <section id="home">
-            <h2>Welcome to UrbanFood</h2>
-            <p>Your source for fresh, locally produced food and handmade crafts!</p>
-        </section>
-        <section id="products">
-            <h2>Our Products</h2>
-            <div class="product">
-                <h3>Fresh Fruits</h3>
-                <p>Locally grown and organic.</p>
-            </div>
-            <div class="product">
-                <h3>Handmade Crafts</h3>
-                <p>Unique and made with love.</p>
-            </div>
-        </section>
+    <!-- Divider Line -->
+    <hr id="navbar-divider">
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- About Us Section -->
         <section id="about">
             <h2>About Us</h2>
-            <p>We connect urban farmers and producers with customers who value fresh and sustainable goods.</p>
+            <p>
+                UrbanFood connects urban farmers and local producers to customers looking for fresh and eco-friendly products. We're all about sustainability, quality, and community.
+            </p>
         </section>
+
+        <!-- Our Services Section -->
+        <section id="services">
+            <h2>Our Services</h2>
+            <ul>
+                <li>Doorstep delivery of fresh produce.</li>
+                <li>An online marketplace for local producers.</li>
+                <li>Eco-friendly product options for our community.</li>
+                <li>Customized baked goods and handmade crafts.</li>
+            </ul>
+        </section>
+
+        <!-- Contact Us Section -->
         <section id="contact">
             <h2>Contact Us</h2>
-            <form>
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-                <label for="message">Message:</label>
-                <textarea id="message" name="message" required></textarea>
-                <button type="submit">Send</button>
-            </form>
+            <p>We'd love to hear from you! Get in touch with us:</p>
+            <ul>
+                <li>Email: support@urbanfood.com</li>
+                <li>Phone: +94 123 456 789</li>
+                <li>Address: 123 Green Lane, Colombo, Sri Lanka</li>
+            </ul>
         </section>
     </main>
+
+    <!-- Footer -->
     <footer>
         <p>&copy; 2025 UrbanFood. All rights reserved.</p>
     </footer>
