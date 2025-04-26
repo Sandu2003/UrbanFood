@@ -5,20 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UrbanFood Home</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Header Section -->
     <header id="top-header">
-        <h1>Welcome to UrbanFood</h1>
+        <h1>Welcome to UrbanFoods</h1>
+        <div id="logo-wrapper">
+            <img src="../assests/logo.png" alt="UrbanFood Logo" id="logo">
+        </div>
         <div class="header-buttons">
             <button onclick="location.href='buyer-login.html'">Sign In as Buyer</button>
             <button onclick="location.href='seller-login.html'">Sign In as Seller</button>
         </div>
+        <button id="login-button" onclick="location.href='login.html'">Login</button>
     </header>
 
-    <!-- Logo & Navbar -->
+
     <div id="logo-navbar">
-        <img src="path/to/your-logo.png" alt="UrbanFood Logo" id="logo">
         <nav>
             <ul>
                 <li><a href="#about">About Us</a></li>
@@ -37,14 +41,21 @@
             </ul>
         </nav>
     </div>
-
-    <!-- Divider Line -->
-    <hr id="navbar-divider">
-
+    <section id="slideshow">
+        <div class="slide-container">
+            <img src="../assests/hen.jpg" alt="Image 1">
+            <img src="../assests/fruits.jpg" alt="Image 2">
+            <img src="../assests/vegetable.jpg" alt="Image 3">
+            <img src="../assests/baked.jpg" alt="Image 4">
+            <img src="../assests/hand-made.jpg" alt="Image 5">
+        </div>
+    </section>
     <!-- Main Content -->
     <main id="main-content">
         <!-- About Us Section -->
         <section id="about">
+            <div class="center-container">
+            <img src="../assests/about.png" alt="about_us" class="small-image"></div>
             <h2>About Us</h2>
             <p>
                 UrbanFood connects urban farmers and local producers to customers looking for fresh and eco-friendly products. We're all about sustainability, quality, and community.
@@ -53,6 +64,8 @@
 
         <!-- Our Services Section -->
         <section id="services">
+            <div class="center-container">
+            <img src="../assests/service.png" alt="services" class="small-image"></div>
             <h2>Our Services</h2>
             <ul>
                 <li>Doorstep delivery of fresh produce.</li>
@@ -64,6 +77,8 @@
 
         <!-- Contact Us Section -->
         <section id="contact">
+            <div class="center-container">
+            <img src="../assests/contact.png" alt="contact_us" class="small-image"></div>
             <h2>Contact Us</h2>
             <p>We'd love to hear from you! Get in touch with us:</p>
             <ul>
@@ -79,4 +94,6 @@
         <p>&copy; 2025 UrbanFood. All rights reserved.</p>
     </footer>
 </body>
+<script src="scripts.js"></script>
+
 </html>

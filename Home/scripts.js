@@ -1,25 +1,25 @@
-// JavaScript for the home page
-            let slideIndex = 0;
-            showSlides();
+document.querySelectorAll('.dropdown > a').forEach(dropdownLink => {
+    dropdownLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        const dropdownMenu = dropdownLink.nextElementSibling;
 
-            function showSlides() {
-            let slides = document.getElementsByClassName("slide");
-            for (let i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";
-            }
-            slideIndex++;
-            if (slideIndex > slides.length) { slideIndex = 1 }
-            slides[slideIndex - 1].style.display = "block";
-            setTimeout(showSlides, 5000); // Change image every 5 seconds
-            }
+        // Toggle dropdown visibility
+        if (dropdownMenu.style.display === 'block') {
+            dropdownMenu.style.display = 'none';
+        } else {
+            dropdownMenu.style.display = 'block';
+        }
+    });
+});
+let slideIndex = 0;
+const slides = document.querySelectorAll(".slide-container img");
 
-            function plusSlides(n) {
-            slideIndex += n;
-            if (slideIndex > document.getElementsByClassName("slide").length) {
-                slideIndex = 1;
-            } else if (slideIndex < 1) {
-                slideIndex = document.getElementsByClassName("slide").length;
-            }
-            showSlides();
-            }
-     
+function showSlides() {
+    slides.forEach(slide => (slide.style.display = "none")); // Hide all images
+    slideIndex++;
+    if (slideIndex > slides.length) slideIndex = 1; // Loop back to the first image
+    slides[slideIndex - 1].style.display = "block"; // Show the current image
+    setTimeout(showSlides, 3000); // Change image every 3 seconds
+}
+
+showSlides();
