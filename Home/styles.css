@@ -44,11 +44,10 @@ body {
     background-color: #004d40;
 }
 
-/* Login Button */
-#login-button {
+/* Login and Cart Button Styles */
+#login-button, #cart {
     position: absolute;
-    top: 1rem; /* Position at the top-right corner */
-    right: 1rem;
+    top: 1rem; /* Position at the top of the header */
     background-color: #004d40;
     color: white;
     border: none;
@@ -59,8 +58,18 @@ body {
     transition: background-color 0.3s ease;
 }
 
-#login-button:hover {
-    background-color: #00796b;
+/* Specific positioning for cart button */
+#login-button {
+    right: 2rem; /* Adjust position separately for Login button */
+}
+
+#cart {
+    right: 6rem; /* Adjust position separately for Cart button */
+}
+
+/* Hover Effect */
+#login-button:hover, #cart:hover {
+    background-color: #00796b; /* Changes the background color on hover */
 }
 
 
@@ -143,16 +152,6 @@ nav ul li a:hover {
     display: block;
 }
 
-/* Responsive design for touch devices */
-@media (max-width: 768px) {
-    .dropdown-menu {
-        display: none;
-    }
-
-    .dropdown:active .dropdown-menu {
-        display: block;
-    }
-}
 
 /* General Slideshow Styles */
 .slide-container {
