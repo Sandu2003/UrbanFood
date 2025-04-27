@@ -52,3 +52,18 @@ document.getElementById("updateProductForm").addEventListener("submit", function
     document.getElementById("searchProductForm").reset();
     document.getElementById("editProductDetails").style.display = "none";
 });
+app.post('/products', (req, res) => {
+    const { Name, Category, Price, SupplierID } = req.body;
+    const query = 'INSERT INTO Products (Name, Category, Price, SupplierID) VALUES (?, ?, ?, ?)';
+    db.query(query, [Name, Category, Price, SupplierID], (err, result) => {
+        if (err) return res.status(500).json({ error: 'Error adding product!' });
+        res.status(201).json({ message: 'Product added successfully!' });
+    });
+});
+app.get('/products', (req, res) => {
+    const query = 'SELECT * FROM Products';
+    db.query(query, (err, results) => {
+        if (err) return res.status(500).json({ error: 'Error fetching products!' });
+        res.status(200).json(results);
+    });
+});

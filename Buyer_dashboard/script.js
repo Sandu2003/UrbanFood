@@ -54,3 +54,10 @@ window.onload = function () {
     loadOrders();
     loadAccountDetails();
 };
+app.get('/customers', (req, res) => {
+    const query = 'SELECT * FROM Customers';
+    db.query(query, (err, results) => {
+        if (err) return res.status(500).json({ error: 'Error fetching customers!' });
+        res.status(200).json(results);
+    });
+});

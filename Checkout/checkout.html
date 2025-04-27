@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <img src="../assets/logo.png" alt="UrbanFood Logo" style="height: 100px;">
+        <h1>Checkout</h1>
+        <div id="logo-navbar">
+            <nav>
+                <ul>
+                    <li><a href="../Home/home_page.html">Home</a></li>
+                    <li><a href="../Home/home_page.html#about">About Us</a></li>
+                    <li><a href="../Home/home_page.html#services">Our Services</a></li>
+                    <li><a href="../Home/home_page.html#contact">Contact Us</a></li>
+                    <li class="dropdown">
+                        <a href="#">Products ▼</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="fruits.html">Fruits</a></li>
+                            <li><a href="vegetables.html">Vegetables</a></li>
+                            <li><a href="dairy.html">Dairy Products</a></li>
+                            <li><a href="baked_goods.html">Baked Goods</a></li>
+                            <li><a href="hand_made.html">Handmade Crafts</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Checkout Form Section -->
+    <main>
+        <section id="checkout">
+            <h2>Complete Your Order</h2>
+            <form id="checkout-form">
+                <!-- Delivery Options -->
+                <label for="delivery-method">Choose Delivery Method:</label>
+                <select id="delivery-method" name="delivery-method" required>
+                    <option value="" disabled selected>Select a method</option>
+                    <option value="standard">Standard Delivery</option>
+                    <option value="express">Express Delivery</option>
+                </select>
+
+                <!-- Payment Options -->
+                <label for="payment-method">Choose Payment Method:</label>
+                <select id="payment-method" name="payment-method" required>
+                    <option value="" disabled selected>Select a method</option>
+                    <option value="credit-card">Credit Card</option>
+                    <option value="paypal">PayPal</option>
+                    <option value="cod">Cash on Delivery</option>
+                </select>
+
+                <!-- Order Summary -->
+                <h3>Order Summary</h3>
+                <div id="order-details">
+                    <!-- Order details will be populated dynamically -->
+                </div>
+                <p><strong>Total Amount:</strong> $<span id="total-amount">0.00</span></p>
+
+                <button type="submit">Place Order</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2025 UrbanFood. All rights reserved.</p>
+    </footer>
+
+    <script src="checkout-script.js"></script>
+</body>
+</html>

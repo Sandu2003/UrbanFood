@@ -1,4 +1,4 @@
-<script>
+
     document.getElementById("registration-form").addEventListener("submit", (e) => {
         e.preventDefault();
 
@@ -25,4 +25,19 @@
             })
             .catch((err) => alert("Error connecting to the server"));
     });
-</script>
+
+app.post('/customers', (req, res) => {
+    const { Name, Address, ContactInfo } = req.body;
+    const query = 'INSERT INTO Customers (Name, Address, ContactInfo) VALUES (?, ?, ?)';
+    db.query(query, [Name, Address, ContactInfo], (err, result) => {
+        if (err) return res.status(500).json({ error: 'Error adding customer!' });
+        res.status(201).json({ message: 'Customer added successfully!' });
+    });
+});
+app.get('/customers', (req, res) => {
+    const query = 'SELECT * FROM Customers';
+    db.query(query, (err, results) => {
+        if (err) return res.status(500).json({ error: 'Error fetching customers!' });
+        res.status(200).json(results);
+    });
+});
