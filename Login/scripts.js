@@ -8,7 +8,7 @@ document.getElementById('login-form').addEventListener('submit', async (event) =
 
     try {
         // Send a POST request to the backend
-        const response = await fetch('http://localhost:3000/login', {
+        const response = await fetch('http://localhost:8080/api/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password, role }),
@@ -17,12 +17,21 @@ document.getElementById('login-form').addEventListener('submit', async (event) =
         const data = await response.json();
 
         if (response.ok) {
-            alert(data.message);
-            // Optionally store the token and redirect the user
+            alert(data.message); // Show success message
+            
+            // Optionally store the token for authentication purposes
             localStorage.setItem('token', data.token);
-            window.location.href = 'dashboard.html'; // Redirect upon successful login
+
+            // Redirect based on the role
+            if (role === 'customer') {
+                window.location.href = 'D:\nibm\HND\DM2\Cw\UrbanFood\UrbanFood\Buyer_dashboard\account_D.html'; 
+            } else if (role === 'supplier') {
+                window.location.href = 'D:\nibm\HND\DM2\Cw\UrbanFood\UrbanFood\Seller_dashboard\change_pro.html'; // Redirect to seller dashboard
+            } else {
+                alert('Invalid role specified!');
+            }
         } else {
-            alert(data.error);
+            alert(data.error); // Show error message
         }
     } catch (error) {
         console.error('Login failed:', error);

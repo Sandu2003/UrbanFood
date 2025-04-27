@@ -1,10 +1,11 @@
 {
-  "name": "urbanfood",
+  "name": "nodejs",
   "version": "1.0.0",
-  "description": "",
+  "description": "dm2 assignment",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon express.js"
   },
   "repository": {
     "type": "git",
@@ -20,8 +21,12 @@
   "dependencies": {
     "body-parser": "^2.2.0",
     "cors": "^2.8.5",
+    "ejs": "^3.1.10",
     "express": "^5.1.0",
     "mongoose": "^8.13.2",
     "oracledb": "^6.8.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
   }
 }

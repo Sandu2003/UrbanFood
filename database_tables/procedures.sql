@@ -18,32 +18,26 @@ FROM
 WHERE 
     PaymentDate BETWEEN TO_DATE('2025-04-01', 'YYYY-MM-DD') 
     AND TO_DATE('2025-04-30', 'YYYY-MM-DD');
-
-
-    CREATE OR REPLACE PROCEDURE FindHighDemandProducts
-IS
+DESC Customers;
+-- 
+CREATE OR REPLACE PROCEDURE validate_login(
+    b_username IN VARCHAR2,  -- Input: Username
+    b_password IN VARCHAR2,  -- Input: Password
+    b_result OUT VARCHAR2    -- Output: SUCCESS or FAILED
+) AS
+    v_count NUMBER;          -- Variable to hold the count of matching rows
 BEGIN
-    SELECT Products.Name, COUNT(OrderID)
-    INTO ProductName, OrderFrequency
-    FROM Products
-    JOIN Orders ON Products.ProductID = Orders.OrderID
-    GROUP BY Products.Name
-    ORDER BY COUNT(OrderID) DESC;
+    -- Check if the username and password exist in the Customers table
+    SELECT COUNT(*) INTO v_count
+    FROM Customers
+    WHERE username = b_username
+      AND password = b_password;
+
+    -- If a matching record is found, return SUCCESS, otherwise FAILED
+    IF v_count = 1 THEN
+        b_result := 'SUCCESS';
+    ELSE
+        b_result := 'FAILED';
+    END IF;
 END;
 /
-
-
-CREATE OR REPLACE PROCEDURE CalculateTotalSales(startDate IN DATE, endDate IN DATE)
-IS
-    total_sales NUMBER;
-BEGIN
-    SELECT SUM(Amount)
-    INTO total_sales
-    FROM Payments
-    WHERE PaymentDate BETWEEN startDate AND endDate;
-
-    DBMS_OUTPUT.PUT_LINE('Total Sales: ' || total_sales);
-END;
-/
-
-

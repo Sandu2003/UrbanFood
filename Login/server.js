@@ -1,61 +1,69 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const mysql = require('mysql');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const cors = require('cors');
+const oracledb = require('oracledb');
 
 const app = express();
-const PORT = 3000;
+const PORT = 8080;
 
 // Middleware
-app.use(cors());
 app.use(bodyParser.json());
 
-// MySQL Connection
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '', // Replace with your MySQL password
-    database: 'urbanfood', // Replace with your database name
-});
-
-db.connect(err => {
-    if (err) throw err;
-    console.log('Connected to the database!');
-});
+// Oracle Database Connection Configuration
+const dbConfig = {
+    user: 'your_username',        // Replace with your DB username
+    password: 'your_password',    // Replace with your DB password
+    connectString: 'localhost/XEPDB1', // Replace with your connection string
+};
 
 // Login Route
-app.post('/login', (req, res) => {
-    const { email, password, role } = req.body;
+app.post('/login', async (req, res) => {
+    const { username, password } = req.body;
 
-    if (!email || !password || !role) {
-        return res.status(400).json({ error: 'All fields are required!' });
+    if (!username || !password) {
+        return res.status(400).json({ error: 'Username and password are required!' });
     }
 
-    const query = 'SELECT * FROM users WHERE email = ? AND role = ?';
-    db.query(query, [email, role], async (err, results) => {
-        if (err) return res.status(500).json({ error: 'Database query error!' });
+    let connection;
 
-        if (results.length === 0) {
-            return res.status(401).json({ error: 'Invalid email or role!' });
+    try {
+        // Connect to Oracle DB
+        connection = await oracledb.getConnection(dbConfig);
+
+        // Call the validate_login procedure
+        const result = await connection.execute(
+            `BEGIN
+                validate_login(:b_username, :b_password, :b_result);
+             END;`,
+            {
+                b_username: username,
+                b_password: password,
+                b_result: { dir: oracledb.BIND_OUT, type: oracledb.STRING },
+            }
+        );
+
+        // Check the procedure result
+        const loginResult = result.outBinds.b_result;
+
+        if (loginResult === 'SUCCESS') {
+            res.status(200).json({ message: 'Login successful!' });
+        } else {
+            res.status(401).json({ error: 'Invalid username or password!' });
         }
-
-        const user = results[0];
-
-        // Compare password
-        const isPasswordValid = await bcrypt.compare(password, user.password);
-        if (!isPasswordValid) {
-            return res.status(401).json({ error: 'Invalid password!' });
+    } catch (err) {
+        console.error('Error during login:', err);
+        res.status(500).json({ error: 'An internal error occurred!' });
+    } finally {
+        if (connection) {
+            try {
+                await connection.close();
+            } catch (err) {
+                console.error('Error closing connection:', err);
+            }
         }
-
-        // Generate JWT
-        const token = jwt.sign({ id: user.id, role: user.role }, 'secretkey', { expiresIn: '1h' });
-        res.status(200).json({ message: 'Login successful!', token });
-    });
+    }
 });
 
-// Start Server
+// Start the Server
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${800}`);
+    console.log(`Server is running on http://localhost:${PORT}`);
 });

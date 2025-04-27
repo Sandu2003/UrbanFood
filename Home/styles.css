@@ -183,14 +183,15 @@ nav ul li a:hover {
 .small-image {
     max-width: 100px;
     height: auto;
+    margin-top: 80px;
 }
 /* Text Alignment */
 section  section p, section ul {
     text-align: left; 
-    margin: auto;
-    max-width: 800px;
+    margin: 100px; 
+    max-width: 500px;
     line-height: 1.6;
-    padding-left: 20px;
+    padding-left: 70px;
 }
 h2 {
     text-align: center;
@@ -199,7 +200,7 @@ section ul {
     padding-left: 20px; 
 }
 section p{
-    padding: 0 20px; /* Add padding to the left and right */
+    padding: 0 100px; /* Add padding to the left and right */
 }
 /* Footer */
 footer {
