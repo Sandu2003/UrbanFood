@@ -9,20 +9,21 @@ CREATE TABLE Suppliers (
     address CLOB NOT NULL
 );
 
-
-CREATE TABLE Buyers (
-    BuyerID NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    Name VARCHAR2(100) NOT NULL,
-    Email VARCHAR2(100) UNIQUE NOT NULL,
-    Password VARCHAR2(255) NOT NULL,
-    Address VARCHAR2(255),
-    Contact VARCHAR2(15) NOT NULL
+CREATE TABLE BUYERS (
+    ID NUMBER PRIMARY KEY,
+    NAME VARCHAR2(100),
+    EMAIL VARCHAR2(100) UNIQUE,
+    PASSWORD VARCHAR2(255),
+    ADDRESS VARCHAR2(255),
+    CONTACT VARCHAR2(50)
 );
--- Drop tables if they exist to avoid conflicts
+
+-- Drop tables to avoid conflicts
 DROP TABLE Payments CASCADE CONSTRAINTS;    
 DROP TABLE Buyers CASCADE CONSTRAINTS;
 DROP TABLE Suppliers CASCADE CONSTRAINTS;
 DROP TABLE Products CASCADE CONSTRAINTS;
+DROP TABLE Orders CASCADE CONSTRAINTS;
 
 CREATE TABLE Products (
     ProductID NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -33,18 +34,13 @@ CREATE TABLE Products (
     FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID) ON DELETE SET NULL
 );
 
--- Create Orders table
-CREATE TABLE Orders (
-    OrderID NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    BuyerID NUMBER NOT NULL,
-    Product VARCHAR2(100) NOT NULL,
-    Quantity NUMBER NOT NULL,
-    TotalPrice NUMBER(10, 2) NOT NULL,
-    OrderDate DATE DEFAULT SYSDATE,
-    FOREIGN KEY (BuyerID) REFERENCES Buyers(BuyerID) ON DELETE CASCADE
+CREATE TABLE ORDERS (
+    ORDER_ID NUMBER PRIMARY KEY,
+    EMAIL VARCHAR2(100),
+    ORDER_DATE DATE,
+    STATUS VARCHAR2(50)
 );
 
--- Create order_details table
 CREATE TABLE order_details (
     ID INT GENERATED ALWAYS AS IDENTITY START WITH 1 INCREMENT BY 1 PRIMARY KEY,
     OrderID INT NOT NULL,
@@ -64,7 +60,6 @@ CREATE TABLE Payments (
     FOREIGN KEY (OrderID) REFERENCES Orders(OrderID) ON DELETE CASCADE
 );
 
--- Create Deliveries table
 CREATE TABLE Deliveries (
     DeliveryID INT PRIMARY KEY,
     OrderID INT NOT NULL,
@@ -73,7 +68,6 @@ CREATE TABLE Deliveries (
     FOREIGN KEY (OrderID) REFERENCES Orders(OrderID) ON DELETE CASCADE
 );
 
--- Create cart table
 CREATE TABLE cart (
     ID INT GENERATED ALWAYS AS IDENTITY START WITH 1 INCREMENT BY 1 PRIMARY KEY,
     ProductID INT NOT NULL,
@@ -85,9 +79,11 @@ REFERENCES Products(ProductID) ON DELETE CASCADE;
 CREATE TABLE baked_goods (
     id NUMBER GENERATED ALWAYS AS IDENTITY START WITH 1 INCREMENT BY 1 PRIMARY KEY,
     name VARCHAR2(100) NOT NULL,
-    description CLOB, -- Use CLOB for large text data
-    image_path VARCHAR2(255) -- Use VARCHAR2 for variable-length strings
+    description CLOB,
+    image_path VARCHAR2(255)
 );
+
+-- Insert sample baked goods
 INSERT INTO baked_goods (name, description, image_path) 
 VALUES ('Homemade Bread', 'Freshly baked loaves, soft on the inside and perfectly crusty on the outside.', '../assets/bread.jpeg');
 
@@ -96,3 +92,12 @@ VALUES ('Muffins', 'Soft and fluffy muffins in various flavors, baked to perfect
 
 INSERT INTO baked_goods (name, description, image_path) 
 VALUES ('Cookies', 'Delicious homemade cookies, crunchy on the outside and gooey on the inside.', '../assets/cookies.webp');
+
+-- Insert sample buyer
+INSERT INTO BUYERS (ID, NAME, EMAIL, PASSWORD, ADDRESS, CONTACT) VALUES
+(1, 'John Doe', 'buyer@example.com', 'password123', '123 Main St', '123-456-7890');
+
+-- Insert sample orders
+INSERT INTO ORDERS (ORDER_ID, EMAIL, ORDER_DATE, STATUS) VALUES
+(1, 'buyer@example.com', SYSDATE, 'Shipped'),
+(2, 'buyer@example.com', SYSDATE, 'Delivered');

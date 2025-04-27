@@ -3,15 +3,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     const totalPriceElement = document.getElementById('total-price');
 
     try {
-        // Fetch cart data from the backend
-        const response = await fetch('http://localhost:3000/cart');
+        const response = await fetch('http://localhost:8080/cart');
         const data = await response.json();
 
         if (response.ok) {
             let totalPrice = 0;
 
-            // Populate cart items dynamically
-            cartBody.innerHTML = data.map((item, index) => {
+            cartBody.innerHTML = data.map((item) => {
                 const subtotal = item.quantity * item.price;
                 totalPrice += subtotal;
 
@@ -30,7 +28,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 `;
             }).join('');
 
-            // Update total price
             totalPriceElement.textContent = totalPrice.toFixed(2);
         } else {
             alert('Failed to fetch cart items.');
@@ -41,17 +38,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
-// Function to update item quantity
 async function updateQuantity(cartId, newQuantity) {
     try {
-        const response = await fetch(`http://localhost:3000/cart/${cartId}`, {
+        const response = await fetch(`http://localhost:8080/cart/${cartId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ quantity: newQuantity }),
         });
 
         if (response.ok) {
-            location.reload(); // Reload cart to reflect changes
+            location.reload();
         } else {
             alert('Failed to update quantity.');
         }
@@ -60,15 +56,14 @@ async function updateQuantity(cartId, newQuantity) {
     }
 }
 
-// Function to remove an item from the cart
 async function removeItem(cartId) {
     try {
-        const response = await fetch(`http://localhost:3000/cart/${cartId}`, {
+        const response = await fetch(`http://localhost:8080/cart/${cartId}`, {
             method: 'DELETE',
         });
 
         if (response.ok) {
-            location.reload(); // Reload cart to reflect changes
+            location.reload();
         } else {
             alert('Failed to remove item.');
         }

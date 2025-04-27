@@ -2,13 +2,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const orderDetailsElement = document.getElementById('order-details');
 
     try {
-        // Replace `orderId` with the actual order ID (fetch from session or query parameter)
         const orderId = 1; // Example order ID
-        const response = await fetch(`http://localhost:8080/orders/${orderId}`);
+        const response = await fetch(`http://localhost:3000/orders/${orderId}`);
         const data = await response.json();
 
         if (response.ok) {
-            // Populate order details dynamically
+            // Display order details
             const orderDetails = data.orderDetails;
             const totalAmount = data.totalAmount;
 
@@ -28,7 +27,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
-// Navigate back to home
+// Navigate to home page
 document.getElementById('home-button').addEventListener('click', () => {
     window.location.href = '../Home/home_page.html';
 });

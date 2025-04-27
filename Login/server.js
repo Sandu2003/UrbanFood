@@ -10,9 +10,9 @@ app.use(bodyParser.json());
 
 // Oracle Database Connection Configuration
 const dbConfig = {
-    user: 'your_username',        // Replace with your DB username
-    password: 'your_password',    // Replace with your DB password
-    connectString: 'localhost/XEPDB1', // Replace with your connection string
+    user: 'system', 
+    password: '1111',    
+    connectString: 'localhost/XEPDB1', 
 };
 
 // Login Route

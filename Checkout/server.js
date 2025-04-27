@@ -20,20 +20,26 @@ app.get('/orders/:id', (req, res) => {
         res.status(200).json({ orderDetails: results, totalAmount });
     });
 });
+
 app.post('/payments', (req, res) => {
     const { orderId, deliveryMethod, paymentMethod, totalAmount } = req.body;
 
     const paymentQuery = 'INSERT INTO Payments (OrderID, PaymentDate, Amount, PaymentMethod) VALUES (?, NOW(), ?, ?)';
     const deliveryQuery = 'INSERT INTO Deliveries (OrderID, DeliveryDate, DeliveryStatus) VALUES (?, NOW(), "Pending")';
 
-    // Save payment and delivery details
+    // Save payment details
     db.query(paymentQuery, [orderId, totalAmount, paymentMethod], (err, result) => {
         if (err) return res.status(500).json({ error: 'Error processing payment!' });
 
+        // Save delivery details
         db.query(deliveryQuery, [orderId], (deliveryErr, deliveryResult) => {
             if (deliveryErr) return res.status(500).json({ error: 'Error scheduling delivery!' });
 
             res.status(201).json({ message: 'Order completed successfully!' });
         });
     });
+});
+
+app.listen(8080, () => {
+    console.log('Server running on port 8080');
 });

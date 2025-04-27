@@ -19,9 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (response.ok) {
                 if (role === 'buyer') {
-                    window.location.href = 'buyer_reg/Bregis.html'; // ✅ Corrected
+                    window.location.href = 'buyer_reg/Bregis.html'; 
                 } else if (role === 'seller') {
-                    window.location.href = 'Seller_reg/sellerReg.html'; // ✅ Corrected
+                    window.location.href = 'Seller_reg/sellerReg.html'; 
                 }
             } else {
                 const errorText = await response.text();
