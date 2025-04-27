@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Baked Goods - UrbanFood</title>
-    <link rel="stylesheet" href="stylesp.css">
+    <link rel="stylesheet" href="../Home/stylesP.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -12,7 +12,7 @@
     <header id="top-header">
         <h1>Welcome to UrbanFood</h1>
         <div id="logo-wrapper">
-            <img src="../assests/logo.png" alt="UrbanFood Logo" id="logo">
+            <img src="../assets/logo.png" alt="UrbanFood Logo" id="logo">
         </div>
     </header>
 
@@ -42,26 +42,14 @@
     <main id="gallery-main">
         <h2>Fresh Baked Goods</h2>
         <section class="gallery-grid">
-            <div class="gallery-item">
-                <img src="../assests/bread.jpeg" alt="Homemade Bread">
-                <h3>Homemade Bread</h3>
-                <p>Freshly baked loaves, soft on the inside and perfectly crusty on the outside.</p>
-            </div>
-            <div class="gallery-item">
-                <img src="../assets/muffin.jpg" alt="Muffins">
-                <h3>Muffins</h3>
-                <p>Soft and fluffy muffins in various flavors, baked to perfection.</p>
-            </div>
-            <div class="gallery-item">
-                <img src="../assets/cookies.jpg" alt="Cookies">
-                <h3>Cookies</h3>
-                <p>Delicious homemade cookies, crunchy on the outside and gooey on the inside.</p>
-            </div>
-            <div class="gallery-item">
-                <img src="../assets/croissant.jpg" alt="Croissants">
-                <h3>Croissants</h3>
-                <p>Buttery and flaky croissants, perfect for breakfast or a snack.</p>
-            </div>
+            <% bakedGoods.forEach(item => { %>
+                <div class="gallery-item">
+                    <img src="<%= item.image_url %>" alt="<%= item.name %>">
+                    <h3><%= item.name %></h3>
+                    <p>Price: $<%= item.price %></p>
+                    <p>Supplier ID: <%= item.supplier_id || 'Unknown' %></p>
+                </div>
+            <% }); %>
         </section>
     </main>
 
