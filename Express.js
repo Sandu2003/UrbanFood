@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const oracledb = require('oracledb');
+const multer = require('multer');
 const dbConfig = require('./dbConfig'); // Database connection config
 const buyerRoutes = require('./routes/buyerRoutes'); // Correct path
  
@@ -127,7 +128,96 @@ app.post('/seller-register', (req, res) => {
         res.status(200).json({ message: 'Seller registered successfully!' });
     });
 });
+// --break--
+//product update
+// Middleware
+app.use(cors());
+app.use(express.json());
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// Multer setup for file uploads
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/');
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname));
+    }
+});
+const upload = multer({ storage });
+
+// Oracle DB connection settings
+const dbConfig = {
+    user: 'YOUR_DB_USERNAME',
+    password: 'YOUR_DB_PASSWORD',
+    connectString: 'localhost/XEPDB1' 
+};
+
+// --- Routes ---
+
+// Search Product by Name
+app.get('/api/products/search', async (req, res) => {
+    const { name } = req.query;
+
+    try {
+        const connection = await oracledb.getConnection(dbConfig);
+        const result = await connection.execute(
+            `SELECT * FROM PRODUCTS WHERE LOWER(NAME) = LOWER(:name)`,
+            [name],
+            { outFormat: oracledb.OUT_FORMAT_OBJECT }
+        );
+        await connection.close();
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+
+        res.json(result.rows[0]);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Database error' });
+    }
+});
+
+// Update Product
+app.put('/api/products/:id', upload.single('editImage'), async (req, res) => {
+    const { id } = req.params;
+    const { editProductName, editCategory, editPrice } = req.body;
+
+    try {
+        const connection = await oracledb.getConnection(dbConfig);
+
+        let query = `UPDATE PRODUCTS 
+                     SET NAME = :name, CATEGORY = :category, PRICE = :price`;
+        let binds = {
+            name: editProductName,
+            category: editCategory,
+            price: editPrice,
+        };
+
+        if (req.file) {
+            query += `, IMAGEURL = :imageurl`;
+            binds.imageurl = `/uploads/${req.file.filename}`;
+        }
+
+        query += ` WHERE PRODUCT_ID = :id`;
+        binds.id = id;
+
+        const result = await connection.execute(query, binds, { autoCommit: true });
+        await connection.close();
+
+        if (result.rowsAffected === 0) {
+            return res.status(404).json({ message: 'Product not found or not updated' });
+        }
+
+        res.json({ message: 'Product updated successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Database update error' });
+    }
+});
+
+// Start Server
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Server running at http://localhost:${PORT}`);
 });
