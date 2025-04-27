@@ -8,7 +8,7 @@
 </head>
 <body>
     <header>
-        <img src="../assests/logo.png" alt="UrbanFood Logo" style="height: 100px;">
+        <img src="../assets/logo.png" alt="UrbanFood Logo" style="height: 100px;">
         <h1>UrbanFood Login</h1>
     </header>
     <main>
@@ -30,11 +30,20 @@
 
                 <button type="submit">Login</button>
             </form>
+            <!--  Home Button -->
+            <button onclick="goHome()" id="home-button" style="margin-top: 20px;">Go Home</button>
+
         </section>
     </main>
     <footer>
         <p>&copy; 2025 UrbanFood. All rights reserved.</p>
     </footer>
+
     <script src="scripts.js"></script>
+    <script>
+        function goHome() {
+            window.location.href = '/';
+        }
+    </script>
 </body>
 </html>

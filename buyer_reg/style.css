@@ -16,7 +16,7 @@ header {
 
 main {
     padding: 2rem;
-    max-width: 600px;
+    max-width:400px;
     margin: 0 auto;
     background-color: #00000062;
     border-radius: 5px;
@@ -72,4 +72,36 @@ footer {
     background: #e0e0e0;
     font-size: 0.9rem;
     margin-top: 3rem;
+}
+/* Success Message */
+#success-message {
+    background-color: #4CAF50;
+    color: white;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.hidden {
+    display: none;
+}
+/* Style for back link with arrow */
+.back-link {
+    display: flex;
+    align-items: center;
+    color: #4CAF50; /* Change the color to suit your design */
+    font-size: 1.2rem;
+    text-decoration: none;
+    margin-top: 20px;
+}
+
+.back-link i {
+    margin-right: 8px; /* Space between the arrow and the text */
+}
+
+.back-link:hover {
+    color: #388E3C; /* Darker green on hover */
 }

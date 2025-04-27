@@ -89,3 +89,34 @@ BEGIN
     SELECT * FROM Orders WHERE BuyerID = p_BuyerID;
 END;
 /
+
+
+
+CREATE OR REPLACE PROCEDURE RegisterSeller (
+    p_name IN VARCHAR2,           -- Corrected datatype to VARCHAR2
+    p_email IN VARCHAR2,          -- Corrected datatype to VARCHAR2
+    p_password IN VARCHAR2,       -- Corrected datatype to VARCHAR2
+    p_businessName IN VARCHAR2,   -- Corrected datatype to VARCHAR2
+    p_businessType IN VARCHAR2,   -- Corrected datatype to VARCHAR2
+    p_contact IN VARCHAR2,        -- Corrected datatype to VARCHAR2
+    p_address IN VARCHAR2         -- Corrected datatype to VARCHAR2
+) IS  -- Use IS (or AS) to indicate the start of the procedure body
+BEGIN
+    INSERT INTO Suppliers (name, email, password, businessName, businessType, contact, address)
+    VALUES (p_name, p_email, p_password, p_businessName, p_businessType, p_contact, p_address);
+    COMMIT;
+END;
+/
+BEGIN
+    RegisterSeller(
+        'John Doe', 
+        'johndoe@example.com', 
+        'password123', 
+        'John''s Fruits', 
+        'Fruits', 
+        '1234567890', 
+        '123 Fruit St'
+    );
+END;
+/
+SELECT * FROM Suppliers;

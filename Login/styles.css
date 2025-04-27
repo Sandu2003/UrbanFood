@@ -6,6 +6,7 @@ body {
     margin: 0;
     padding: 0;
     background-image: url(../assests/login.jpg);
+    background-size: cover;
     color: #333;
 }
 
@@ -36,10 +37,10 @@ header h1 {
 
 /* Main Section */
 main {
-    max-width: 800px;
+    max-width: 500px;
     margin: 2rem auto;
     padding: 1.5rem;
-    background-color: rgba(0, 0, 0, 0.381);
+    background-color: rgba(255, 255, 255, 0.381);
     border-radius: 10px;
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
 }

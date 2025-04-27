@@ -1,79 +1,66 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const dbConfig = require('./dbConfig'); 
+const oracledb = require('oracledb');
+const dbConfig = require('./dbConfig'); // Database connection config
+const buyerRoutes = require('./routes/buyerRoutes'); // Correct path
+ 
 
-const buyerRoutes = require('./routes/buyer'); // Import Buyer Routes
-const registerRoutes = require('./routes/register'); // Import Register Routes
 
 const app = express();
 const PORT = 8080;
+
+// Middleware
+app.use(cors());
+app.use(bodyParser.json()); // Ensure you can read JSON in POST body
+
+
+// Define the routes
+app.use('/buyer', buyerRoutes);// Mount routes under /buyer
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Use Routes
-app.use('/buyer', buyerRoutes);
-app.use('/seller', sellerRoutes);
-app.use('/products', productRoutes);
+// Dummy users for testing
+const testUsers = [
+    { email: 'buyer@test.com', password: 'buyer123', role: 'buyer' },
+    { email: 'seller@test.com', password: 'seller123', role: 'seller' }
+];
 
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-});
-async function loadAccountDetails(buyerID) {
-    const response = await fetch(`http://localhost:8080/buyer/account/${buyerID}`);
-    const data = await response.json();
+// LOGIN API
+app.post('/login', async (req, res) => {
+    const { email, password, role } = req.body;
 
-    document.getElementById('accountDetails').innerHTML = `
-        <p><strong>Name:</strong> ${data[0][1]}</p>
-        <p><strong>Email:</strong> ${data[0][2]}</p>
-        <p><strong>Phone:</strong> ${data[0][3]}</p>
-        <p><strong>Address:</strong> ${data[0][4]}</p>
-    `;
-}
-async function loadOrders(buyerID) {
-    const response = await fetch(`http://localhost:8080/buyer/orders/${buyerID}`);
-    const orders = await response.json();
+    // Check if the user is a test user
+    const testUser = testUsers.find(user => 
+        user.email === email && 
+        user.password === password && 
+        user.role === role
+    );
 
-    document.getElementById('orderList').innerHTML = orders.map(order => `
-        <div class="order-item">
-            <p><strong>Order ID:</strong> ${order[0]}</p>
-            <p><strong>Product:</strong> ${order[2]}</p>
-            <p><strong>Quantity:</strong> ${order[3]}</p>
-            <p><strong>Total Price:</strong> ${order[4]}</p>
-            <p><strong>Order Date:</strong> ${order[5]}</p>
-        </div>
-    `).join('');
-}
-document.addEventListener('DOMContentLoaded', () => {
-    const buyerID = 1; // Replace with dynamic BuyerID
-    loadAccountDetails(buyerID);
-    loadOrders(buyerID);
-});
-// Register Buyer API
-app.post('/register', async (req, res) => {
-    const { name, email, password, address, contact } = req.body;
+    if (testUser) {
+        return res.status(200).json({ message: 'Login successful' });
+    }
 
+    // If it's not a test user, check in the database
     let connection;
-
     try {
         connection = await oracledb.getConnection(dbConfig);
 
-        await connection.execute(
-            `BEGIN RegisterBuyer(:p_Name, :p_Email, :p_Password, :p_Address, :p_Contact); END;`,
-            {
-                p_Name: name,
-                p_Email: email,
-                p_Password: password, // NOTE: Use hashing here for real-world apps
-                p_Address: address,
-                p_Contact: contact
-            }
+        const result = await connection.execute(
+            `SELECT * FROM Buyers WHERE Email = :email AND Password = :password`,
+            [email, password],
+            { outFormat: oracledb.OUT_FORMAT_OBJECT } // To return results as objects
         );
 
-        res.status(201).send('Buyer registered successfully!');
+        if (result.rows.length > 0) {
+            return res.status(200).json({ message: 'Login successful' });
+        } else {
+            return res.status(401).send('Invalid credentials');
+        }
     } catch (err) {
-        console.error('Error during buyer registration:', err);
+        console.error('Error during login:', err);
         res.status(500).send('Internal Server Error');
     } finally {
         if (connection) {
@@ -84,4 +71,63 @@ app.post('/register', async (req, res) => {
             }
         }
     }
+});
+// Buyer Registration API
+app.post('/register-buyer', async (req, res) => {
+    const { name, email, password, address, contact } = req.body;
+
+    // Hash the password
+    const hashedPassword = bcrypt.hashSync(password, 10);  // Hash with 10 rounds
+
+    // Save buyer to the database
+    let connection;
+    try {
+        connection = await oracledb.getConnection(dbConfig);
+
+        const result = await connection.execute(
+            `INSERT INTO Buyers (Name, Email, Password, Address, Contact) 
+            VALUES (:name, :email, :password, :address, :contact)`,
+            [name, email, hashedPassword, address, contact],
+            { autoCommit: true }
+        );
+
+        return res.status(201).json({ message: 'Buyer registered successfully' });
+    } catch (err) {
+        console.error('Error during registration:', err);
+        res.status(500).send('Internal Server Error');
+    } finally {
+        if (connection) {
+            try {
+                await connection.close();
+            } catch (closeErr) {
+                console.error('Error closing connection:', closeErr);
+            }
+        }
+    }
+});
+// Seller Registration Route
+app.post('/seller-register', (req, res) => {
+    const { name, email, password, businessName, businessType, contact, address } = req.body;
+
+    if (!name || !email || !password || !businessName || !businessType || !contact || !address) {
+        return res.status(400).json({ error: 'All fields are required' });
+    }
+
+    // Call the stored procedure for registration
+    const query = `
+        CALL RegisterSeller(?, ?, ?, ?, ?, ?, ?);
+    `;
+
+    db.query(query, [name, email, password, businessName, businessType, contact, address], (err, result) => {
+        if (err) {
+            console.error("Error during registration:", err);
+            return res.status(500).json({ error: 'Error registering seller' });
+        }
+        
+        res.status(200).json({ message: 'Seller registered successfully!' });
+    });
+});
+
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
 });

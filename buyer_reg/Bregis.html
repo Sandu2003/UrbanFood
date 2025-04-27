@@ -5,42 +5,81 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buyer Registration</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
 </head>
 <body>
     <header>
+        <a href="../Home/home_page.html" class="back-link"><i class="fas fa-arrow-left"></i> Home</a> <!-- Home link with back arrow -->
         <img src="../assests/logo.png" alt="UrbanFood Logo" style="height: 100px;">
         <h1>UrbanFood Buyer Registration</h1>
     </header>
     <main>
-        <section id="registration">
-            <h2>Register as a Buyer</h2>
-            <form id="registration-form">
-                <label for="name">Full Name:</label>
-                <input type="text" id="name" name="name" placeholder="Enter your full name" required>
-
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" placeholder="Enter your email address" required>
-
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" placeholder="Create a password" required>
-
-                <label for="address">Address:</label>
-                <textarea id="address" name="address" placeholder="Enter your address" required></textarea>
-
-                <label for="contact">Contact Number:</label>
-                <input type="tel" id="contact" name="contact" placeholder="Enter your contact number" required>
-
+        <section id="register">
+            <h2>Create a New Account</h2>
+            <form id="register-form">
+                <input type="text" id="name" placeholder="Name" required>
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <input type="text" id="address" placeholder="Address" required>
+                <input type="text" id="contact" placeholder="Contact" required>
                 <button type="submit">Register</button>
             </form>
+            <p>Already have an account? <a href="../Login/login.html">Login here</a></p>            
+
+            <!-- 🏠 Home Button -->
+            <button onclick="goHome()" id="home-button" style="margin-top: 20px;">Go Home</button>
         </section>
     </main>
+            <!-- Success Message Section -->
+            <div id="success-message" class="hidden">
+                <p>Registration successful! Redirecting to login page...</p>
+            </div>
+        </main>
     <footer>
         <p>&copy; 2025 UrbanFood. All rights reserved.</p>
     </footer>
 
-    <!-- Link the JavaScript file -->
-    <script src="../routes/register.js"></script>
+    <script>
+        // Function to redirect to the home page
+        function goHome() {
+            window.location.href = '/';
+        }
+
+        // Form submission event handler
+        document.addEventListener('DOMContentLoaded', () => {
+            const registerForm = document.getElementById('register-form');
+            registerForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+
+                const name = document.getElementById('name').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value.trim();
+                const address = document.getElementById('address').value.trim();
+                const contact = document.getElementById('contact').value.trim();
+
+                try {
+                    const response = await fetch('http://localhost:8080/register-buyer', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ name, email, password, address, contact })
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        alert(data.message);  // Success message
+                        window.location.href = '/buyer/dashboard';  // Redirect to buyer dashboard (adjust the path as needed)
+                    } else {
+                        const errorText = await response.text();
+                        alert('Registration failed: ' + errorText);
+                    }
+                } catch (error) {
+                    console.error('Registration error:', error);
+                    alert('An error occurred. Please try again later.');
+                }
+            });
+        });
+    </script>
+    <script src="../routes/buyerRoutes.js"></script> <!-- FontAwesome for back arrow -->
 </body>
 </html>
