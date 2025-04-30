@@ -17,6 +17,7 @@ CREATE TABLE BUYERS (
     ADDRESS VARCHAR2(255),
     CONTACT VARCHAR2(50)
 );
+CREATE DATABASE urbanfood;
 
 -- Drop tables to avoid conflicts
 DROP TABLE Payments CASCADE CONSTRAINTS;    
@@ -25,14 +26,14 @@ DROP TABLE Suppliers CASCADE CONSTRAINTS;
 DROP TABLE Products CASCADE CONSTRAINTS;
 DROP TABLE Orders CASCADE CONSTRAINTS;
 
-CREATE TABLE Products (
-    ProductID NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    Name VARCHAR2(100) NOT NULL,
-    Category VARCHAR2(50),
-    Price NUMBER(10, 2),
-    SupplierID NUMBER,
-    FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID) ON DELETE SET NULL
+CREATE TABLE products (
+    product_id NUMBER PRIMARY KEY,
+    product_name VARCHAR2(100),
+    description VARCHAR2(255),
+    image_path VARCHAR2(255),
+    category VARCHAR2(50)
 );
+
 
 CREATE TABLE ORDERS (
     ORDER_ID NUMBER PRIMARY KEY,
@@ -76,22 +77,11 @@ CREATE TABLE cart (
 ALTER TABLE cart ADD CONSTRAINT fk_cart_product FOREIGN KEY (ProductID)
 REFERENCES Products(ProductID) ON DELETE CASCADE;
 
-CREATE TABLE baked_goods (
-    id NUMBER GENERATED ALWAYS AS IDENTITY START WITH 1 INCREMENT BY 1 PRIMARY KEY,
-    name VARCHAR2(100) NOT NULL,
-    description CLOB,
-    image_path VARCHAR2(255)
-);
+INSERT INTO products (product_id, product_name, description, image_path, category)
+VALUES (1, 'Fresh Milk', 'Creamy and delicious milk', '../assets/milk.jpg', 'Dairy');
 
--- Insert sample baked goods
-INSERT INTO baked_goods (name, description, image_path) 
-VALUES ('Homemade Bread', 'Freshly baked loaves, soft on the inside and perfectly crusty on the outside.', '../assets/bread.jpeg');
-
-INSERT INTO baked_goods (name, description, image_path) 
-VALUES ('Muffins', 'Soft and fluffy muffins in various flavors, baked to perfection.', '../assets/muffin.webp');
-
-INSERT INTO baked_goods (name, description, image_path) 
-VALUES ('Cookies', 'Delicious homemade cookies, crunchy on the outside and gooey on the inside.', '../assets/cookies.webp');
+INSERT INTO products (product_id, product_name, description, image_path, category)
+VALUES (2, 'Banana Bread', 'Moist and sweet homemade banana bread.', '../assets/banana_bread.jpg', 'Baked Goods');
 
 -- Insert sample buyer
 INSERT INTO BUYERS (ID, NAME, EMAIL, PASSWORD, ADDRESS, CONTACT) VALUES
