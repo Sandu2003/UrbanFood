@@ -16,7 +16,7 @@ include 'connection.php'; // Oracle DB connection
 <header id="top-header">
     <h1>Welcome to UrbanFood</h1>
     <div id="logo-wrapper">
-        <img src="../assets/logo.png" alt="UrbanFood Logo" id="logo">
+        <img src="assets/logo.png" alt="UrbanFood Logo" id="logo">
     </div>
 </header>
 
