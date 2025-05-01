@@ -1,4 +1,7 @@
-<?php include("connection.php"); ?>
+<?php 
+include("connection.php"); 
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,27 +41,36 @@
             </ul>
         </nav>
     </div>
-            </ul>
-        </nav>
-    </div>
 
     <!-- Dairy Products Gallery Section -->
     <main id="gallery-main">
         <h2>Fresh Dairy Products</h2>
         <section class="gallery-grid">
             <?php
+            // Query to fetch dairy products
             $query = "SELECT * FROM products WHERE LOWER(category) = 'dairy'";
             $stmt = oci_parse($conn, $query);
             oci_execute($stmt);
 
+            // Loop through each product and display it
             while ($row = oci_fetch_assoc($stmt)) {
                 echo '<div class="gallery-item">';
                 echo '<img src="' . htmlspecialchars($row['IMAGE_PATH']) . '" alt="' . htmlspecialchars($row['PRODUCT_NAME']) . '">';
                 echo '<h3>' . htmlspecialchars($row['PRODUCT_NAME']) . '</h3>';
                 echo '<p>' . htmlspecialchars($row['DESCRIPTION']) . '</p>';
+                
+                // Display Price
+                echo '<p class="price">Rs. ' . number_format($row['PRICE'], 2) . '</p>';
+                
+                // Display Available Stock
+                echo '<p class="stock">Available: ' . (int)$row['STOCK'] . ' units</p>';
+                
+                // Add to Cart Button
+                echo '<button class="add-to-cart">Add to Cart</button>';
                 echo '</div>';
             }
 
+            // Free the statement and close the connection
             oci_free_statement($stmt);
             oci_close($conn);
             ?>

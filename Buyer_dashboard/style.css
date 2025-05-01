@@ -1,24 +1,29 @@
-/* General Styling */
+/* ---------------------------------------
+   Base Styling
+---------------------------------------- */
 body {
     font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f4f8;
+    background-color: #f9fbfc;
     color: #333;
 }
 
+/* ---------------------------------------
+   Header
+---------------------------------------- */
 header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
-    background-color: #004d40;
-    color: white;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    position: fixed;
-    width: 100%;
-    z-index: 1000;
-    top: 0;
+    background-color: #e0f7fa;
+    color: #004d40;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
 .logo img {
@@ -33,27 +38,30 @@ header {
 
 .nav-link {
     margin-right: 1.5rem;
-    color: white;
+    color: #004d40;
     text-decoration: none;
-    font-weight: 400;
+    font-weight: bold;
     transition: color 0.3s ease;
 }
 
 .nav-link:hover {
-    color: #c8e6c9;
+    color: #00796b;
 }
 
+/* ---------------------------------------
+   Sidebar Navigation
+---------------------------------------- */
 .side-nav {
     position: fixed;
-    top: 120px; 
+    top: 120px;
     left: 0;
     width: 200px;
-    height: calc(100% - 120px); 
-    background-color: #004d40;
-    color: white;
+    height: calc(100% - 120px);
+    background-color: #e0f2f1;
+    color: #004d40;
     padding: 1rem;
-    box-shadow: 2px 0 6px rgba(0, 0, 0, 0.1);
-    overflow-y: auto;  
+    overflow-y: auto;
+    box-shadow: 2px 0 6px rgba(0, 0, 0, 0.05);
 }
 
 .side-nav ul {
@@ -66,16 +74,19 @@ header {
 }
 
 .side-nav a {
-    color: white;
+    color: #004d40;
     text-decoration: none;
-    font-weight: 400;
+    font-weight: 500;
     transition: color 0.3s ease;
 }
 
 .side-nav a:hover {
-    color: #c8e6c9;
+    color: #00796b;
 }
 
+/* ---------------------------------------
+   Main Content Area
+---------------------------------------- */
 .dashboard-content {
     margin-left: 220px;
     padding: 2rem;
@@ -83,10 +94,14 @@ header {
 }
 
 .dashboard-content h2 {
-    color: #00796b;
+    color: #009688;
+    text-align: center;
     margin-bottom: 1.5rem;
 }
 
+/* ---------------------------------------
+   Order Cards
+---------------------------------------- */
 .order-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -94,11 +109,16 @@ header {
 }
 
 .order-card {
-    background: white;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background: #ffffff;
+    padding: 1.2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.order-card:hover {
+    transform: translateY(-5px);
 }
 
 .order-card h3 {
@@ -111,25 +131,45 @@ header {
     margin: 0.5rem 0;
 }
 
+/* ---------------------------------------
+   Account Details Section
+---------------------------------------- */
 #accountDetails p {
-    background: white;
+    background: #ffffff;
     padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     margin-bottom: 1rem;
 }
+
+/* ---------------------------------------
+   Form Elements / Select Box
+---------------------------------------- */
 .dashboard-select {
-    background-color: #00796b;
+    background-color: #4db6ac;
     color: white;
     margin-left: 50px;
-    padding: 1rem 1.5rem;
-    border: 2px solid #004d40;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    border: 2px solid #009688;
     border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
+
+.dashboard-select:hover {
+    background-color: #009688;
+}
+
+/* ---------------------------------------
+   Footer
+---------------------------------------- */
 footer {
+    background-color: #f1f8f7;
+    color: #444;
     text-align: center;
     padding: 1.5rem 0;
-    background: #e0e0e0;
     font-size: 0.9rem;
+    width: 100%;
     margin-top: 3rem;
 }

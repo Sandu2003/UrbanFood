@@ -20,8 +20,8 @@ include 'connection.php'; // Oracle DB connection
         </div>
     </header>
 
-       <!-- Navigation Bar -->
-       <div id="logo-navbar">
+    <!-- Navigation Bar -->
+    <div id="logo-navbar">
         <nav>
             <ul>
                 <li><a href="home_page.php">Home</a></li>
@@ -41,33 +41,45 @@ include 'connection.php'; // Oracle DB connection
             </ul>
         </nav>
     </div>
-            </ul>
-        </nav>
-    </div>
-<main id="gallery-main">
-    <h2>Fresh Baked Goods</h2>
-    <section class="gallery-grid">
-        <?php
-        $query = "SELECT * FROM products WHERE LOWER(category) = 'baked goods'";
-        $stmt = oci_parse($conn, $query);
-        oci_execute($stmt);
 
-        while ($row = oci_fetch_assoc($stmt)) {
-            echo '<div class="gallery-item">';
-            echo '<img src="' . htmlspecialchars($row['IMAGE_PATH']) . '" alt="' . htmlspecialchars($row['PRODUCT_NAME']) . '">';
-            echo '<h3>' . htmlspecialchars($row['PRODUCT_NAME']) . '</h3>';
-            echo '<p>' . htmlspecialchars($row['DESCRIPTION']) . '</p>';
-            echo '</div>';
-        }
+    <!-- Baked Goods Gallery Section -->
+    <main id="gallery-main">
+        <h2>Fresh Baked Goods</h2>
+        <section class="gallery-grid">
+            <?php
+            // Query to fetch baked goods
+            $query = "SELECT * FROM products WHERE LOWER(category) = 'baked goods'";
+            $stmt = oci_parse($conn, $query);
+            oci_execute($stmt);
 
-        oci_free_statement($stmt);
-        oci_close($conn);
-        ?>
-    </section>
-</main>
+            // Loop through each product and display it
+            while ($row = oci_fetch_assoc($stmt)) {
+                echo '<div class="gallery-item">';
+                echo '<img src="' . htmlspecialchars($row['IMAGE_PATH']) . '" alt="' . htmlspecialchars($row['PRODUCT_NAME']) . '">';
+                echo '<h3>' . htmlspecialchars($row['PRODUCT_NAME']) . '</h3>';
+                echo '<p>' . htmlspecialchars($row['DESCRIPTION']) . '</p>';
+                
+                // Display Price
+                echo '<p class="price">Rs. ' . number_format($row['PRICE'], 2) . '</p>';
+                
+                // Display Available Stock
+                echo '<p class="stock">Available: ' . (int)$row['STOCK'] . ' units</p>';
+                
+                // Add to Cart Button
+                echo '<button class="add-to-cart">Add to Cart</button>';
+                echo '</div>';
+            }
 
-<footer>
-    <p>&copy; 2025 UrbanFood. All rights reserved.</p>
-</footer>
+            // Free the statement and close the connection
+            oci_free_statement($stmt);
+            oci_close($conn);
+            ?>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2025 UrbanFood. All rights reserved.</p>
+    </footer>
 </body>
 </html>

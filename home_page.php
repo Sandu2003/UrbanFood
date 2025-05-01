@@ -27,8 +27,8 @@ require 'connection.php';
         
     </div>
     <div class="header-buttons">
-        <button onclick="location.href='buyer_reg/Bregis.html'">Sign In as Buyer</button>
-        <button onclick="location.href='Seller_reg/sellerReg.html'">Sign In as Seller</button>
+        <button onclick="location.href='Bregis.php'">Sign In as Buyer</button>
+        <button onclick="location.href='sellerReg.php'">Sign In as Seller</button>
     </div>
 
 </header>

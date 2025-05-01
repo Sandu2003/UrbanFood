@@ -56,8 +56,18 @@ include 'connection.php'; // Oracle DB connection
             echo '<img src="' . htmlspecialchars($row['IMAGE_PATH']) . '" alt="' . htmlspecialchars($row['PRODUCT_NAME']) . '">';
             echo '<h3>' . htmlspecialchars($row['PRODUCT_NAME']) . '</h3>';
             echo '<p>' . htmlspecialchars($row['DESCRIPTION']) . '</p>';
+            
+            // Display Price
+            echo '<p class="price">Rs. ' . number_format($row['PRICE'], 2) . '</p>';
+            
+            // Display Available Stock
+            echo '<p class="stock">Available: ' . (int)$row['STOCK'] . ' units</p>';
+            
+            // Add to Cart Button
+            echo '<button class="add-to-cart">Add to Cart</button>';
             echo '</div>';
         }
+        
 
         oci_free_statement($stmt);
         oci_close($conn);

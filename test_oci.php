@@ -7,3 +7,6 @@ if (!$conn) {
     echo "✅ Connected successfully!";
 }
 ?>
+<?php
+echo "It works!";
+?>

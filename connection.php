@@ -18,5 +18,6 @@ if (!$conn) {
     die("❌ Connection failed: " . $e['message']);
 }
 
-//echo "✅ Connected successfully!";
+// Success message
+echo "✅ Successfully connected to Oracle Database.";
 ?>

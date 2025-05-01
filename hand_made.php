@@ -7,8 +7,8 @@ include 'connection.php'; // Oracle DB connection
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fruits - UrbanFood</title>
-    <link rel="stylesheet" href="stylesP.css">
+    <title>Vegetables - UrbanFood</title>
+    <link rel="stylesheet" href="home/stylesP.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -43,12 +43,13 @@ include 'connection.php'; // Oracle DB connection
     </nav>
 </div>
 
-<!-- Fruits Gallery Section -->
+<!-- Vegetables Gallery Section -->
 <main id="gallery-main">
-    <h2>Fresh Fruits</h2>
+    <h2>Fresh Vegetables</h2>
     <section class="gallery-grid">
         <?php
-        $query = "SELECT * FROM products WHERE LOWER(category) = 'fruits'";
+        // Fetching products from the database
+        $query = "SELECT * FROM products WHERE LOWER(category) = 'vegetables'";
         $stmt = oci_parse($conn, $query);
         oci_execute($stmt);
 
@@ -57,6 +58,15 @@ include 'connection.php'; // Oracle DB connection
             echo '<img src="' . htmlspecialchars($row['IMAGE_PATH']) . '" alt="' . htmlspecialchars($row['PRODUCT_NAME']) . '">';
             echo '<h3>' . htmlspecialchars($row['PRODUCT_NAME']) . '</h3>';
             echo '<p>' . htmlspecialchars($row['DESCRIPTION']) . '</p>';
+            
+            // Display Price
+            echo '<p class="price">Rs. ' . number_format($row['PRICE'], 2) . '</p>';
+            
+            // Display Available Stock
+            echo '<p class="stock">Available: ' . (int)$row['STOCK'] . ' units</p>';
+            
+            // Add to Cart Button
+            echo '<button class="add-to-cart">Add to Cart</button>';
             echo '</div>';
         }
 

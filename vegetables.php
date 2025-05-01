@@ -1,17 +1,22 @@
 <?php
 include 'connection.php';
 
+// Fetch products from the database
 $query = "SELECT * FROM products WHERE category = 'vegetables'";
 $stid = oci_parse($conn, $query);
 oci_execute($stid);
 
+// Initialize an array to store products
 $products = [];
 while ($row = oci_fetch_assoc($stid)) {
+    // Add product to the products array
     $products[] = $row;
 }
+
 oci_free_statement($stid);
 oci_close($conn);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,6 +34,7 @@ oci_close($conn);
         </div>
     </header>
 
+    <!-- Navigation Bar -->
     <div id="logo-navbar">
         <nav>
             <ul>
@@ -56,9 +62,18 @@ oci_close($conn);
         <section class="gallery-grid">
             <?php foreach ($products as $product): ?>
                 <div class="gallery-item">
-                    <img src=".assets/<?php echo htmlspecialchars($product['IMAGE_PATH']); ?>" alt="<?php echo htmlspecialchars($product['PRODUCT_NAME']); ?>">
+                    <img src="assets/<?php echo htmlspecialchars($product['IMAGE_PATH']); ?>" alt="<?php echo htmlspecialchars($product['PRODUCT_NAME']); ?>">
                     <h3><?php echo htmlspecialchars($product['PRODUCT_NAME']); ?></h3>
                     <p><?php echo htmlspecialchars($product['DESCRIPTION']); ?></p>
+                    
+                    <!-- Display Price -->
+                    <p class="price">Rs. <?php echo number_format($product['PRICE'], 2); ?></p>
+                    
+                    <!-- Display Available Stock -->
+                    <p class="stock">Available: <?php echo (int)$product['STOCK']; ?> units</p>
+                    
+                    <!-- Add to Cart Button -->
+                    <button class="add-to-cart">Add to Cart</button>
                 </div>
             <?php endforeach; ?>
         </section>
