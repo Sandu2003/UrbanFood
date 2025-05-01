@@ -20,7 +20,10 @@ header {
     background-color: #004d40;
     padding: 1rem 2rem;
 }
-
+#logo {
+    height: 180px; /* Set the desired smaller height */
+    width: auto;
+}
 nav ul {
     list-style: none;
     margin: 0;

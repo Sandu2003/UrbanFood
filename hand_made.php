@@ -1,5 +1,6 @@
 <?php
 include 'connection.php'; // Oracle DB connection
+session_start();  // Start session
 ?>
 
 <!DOCTYPE html>
@@ -7,13 +8,13 @@ include 'connection.php'; // Oracle DB connection
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vegetables - UrbanFood</title>
+    <title>Handmade Crafts - UrbanFood</title>
     <link rel="stylesheet" href="home/stylesP.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<!-- Header Section -->
+<!-- Header -->
 <header id="top-header">
     <h1>Welcome to UrbanFood</h1>
     <div id="logo-wrapper">
@@ -21,7 +22,7 @@ include 'connection.php'; // Oracle DB connection
     </div>
 </header>
 
-<!-- Navigation Bar -->
+<!-- Navigation -->
 <div id="logo-navbar">
     <nav>
         <ul>
@@ -43,13 +44,12 @@ include 'connection.php'; // Oracle DB connection
     </nav>
 </div>
 
-<!-- Vegetables Gallery Section -->
+<!-- Gallery Section -->
 <main id="gallery-main">
-    <h2>Fresh Vegetables</h2>
+    <h2>Handmade Crafts</h2>
     <section class="gallery-grid">
         <?php
-        // Fetching products from the database
-        $query = "SELECT * FROM products WHERE LOWER(category) = 'vegetables'";
+        $query = "SELECT * FROM products WHERE LOWER(category) = 'handmade crafts'";
         $stmt = oci_parse($conn, $query);
         oci_execute($stmt);
 
@@ -58,15 +58,14 @@ include 'connection.php'; // Oracle DB connection
             echo '<img src="' . htmlspecialchars($row['IMAGE_PATH']) . '" alt="' . htmlspecialchars($row['PRODUCT_NAME']) . '">';
             echo '<h3>' . htmlspecialchars($row['PRODUCT_NAME']) . '</h3>';
             echo '<p>' . htmlspecialchars($row['DESCRIPTION']) . '</p>';
-            
-            // Display Price
             echo '<p class="price">Rs. ' . number_format($row['PRICE'], 2) . '</p>';
+            echo '<p class="stock">Available: ' . (int)$row['STOCK_QUANTITY'] . ' units</p>';
             
-            // Display Available Stock
-            echo '<p class="stock">Available: ' . (int)$row['STOCK'] . ' units</p>';
-            
-            // Add to Cart Button
-            echo '<button class="add-to-cart">Add to Cart</button>';
+            echo '<form method="POST" action="add_to_cart.php">';
+            echo '<input type="hidden" name="product_id" value="' . htmlspecialchars($row['PRODUCT_ID']) . '">';
+            echo '<input type="number" name="quantity" value="1" min="1" max="' . (int)$row['STOCK_QUANTITY'] . '" required>';
+            echo '<button type="submit" class="add-to-cart">Add to Cart</button>';
+            echo '</form>';
             echo '</div>';
         }
 
@@ -76,7 +75,7 @@ include 'connection.php'; // Oracle DB connection
     </section>
 </main>
 
-<!-- Footer Section -->
+<!-- Footer -->
 <footer>
     <p>&copy; 2025 UrbanFood. All rights reserved.</p>
 </footer>

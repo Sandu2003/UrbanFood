@@ -2,43 +2,45 @@
 // Include the connection file
 include('connection.php');
 
-// Initialize variables for product details
+// Initialize variables
 $productInfo = "";
+$searchProductName = "";
 
-// Check if form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+// Handle search form submission
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['searchProductName'])) {
     $searchProductName = $_POST['searchProductName'];
 
-    // Search for product in the database
+    // Search for the product
     $sql = "SELECT * FROM products WHERE product_name = :searchProductName";
     $stmt = oci_parse($conn, $sql);
     oci_bind_by_name($stmt, ":searchProductName", $searchProductName);
     oci_execute($stmt);
 
-    // Fetch product details if found
     if ($row = oci_fetch_assoc($stmt)) {
         $productInfo = "Product Name: " . $row['PRODUCT_NAME'] . "<br>" .
                        "Category: " . $row['CATEGORY'] . "<br>" .
                        "Price: $" . $row['PRICE'] . "<br>" .
-                       "Image: <img src='uploads/" . $row['IMAGE'] . "' alt='Product Image' width='100'>";
+                       "Description: " . $row['DESCRIPTION'] . "<br>" .
+                       "Stock Available: " . $row['STOCK_QUANTITY'] . "<br>" .
+                       "Image: <br><img src='uploads/" . $row['IMAGE_PATH'] . "' alt='Product Image' width='100'>";
     } else {
-        $productInfo = "No product found with that name.";
+        $productInfo = "❌ No product found with that name.";
     }
 }
 
-// Check if product removal is requested
+// Handle removal form submission
 if (isset($_POST['removeProduct'])) {
     $productNameToRemove = $_POST['productNameToRemove'];
 
-    // Delete the product from the database
     $deleteSql = "DELETE FROM products WHERE product_name = :productNameToRemove";
     $deleteStmt = oci_parse($conn, $deleteSql);
     oci_bind_by_name($deleteStmt, ":productNameToRemove", $productNameToRemove);
-    
+
     if (oci_execute($deleteStmt)) {
-        echo "Product removed successfully!";
+        $productInfo = "✅ Product <strong>" . htmlspecialchars($productNameToRemove) . "</strong> removed successfully!";
     } else {
-        echo "Error removing product.";
+        $e = oci_error($deleteStmt);
+        $productInfo = "❌ Error removing product: " . $e['message'];
     }
 }
 ?>
@@ -47,7 +49,6 @@ if (isset($_POST['removeProduct'])) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seller Dashboard - Remove Product</title>
     <link rel="stylesheet" href="seller_dashboard/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
@@ -55,7 +56,7 @@ if (isset($_POST['removeProduct'])) {
 <body>
     <header>
         <div class="logo">
-            <img src="../assests/logo.png" alt="UrbanFood Logo">
+            <img src="assets/logo.png" alt="UrbanFood Logo">
         </div>
         <nav class="top-nav">
             <a href="home.html" class="nav-link">Home</a>
@@ -68,9 +69,9 @@ if (isset($_POST['removeProduct'])) {
     <main>
         <aside class="side-nav">
             <ul>
-                <li><a href="Products_sell.html">Add Products</a></li>
-                <li><a href="remove_pro.html">Remove Products</a></li>
-                <li><a href="change_pro.html">Change Products</a></li>
+                <li><a href="Products_sell.php">Add Products</a></li>
+                <li><a href="remove_pro.php">Remove Products</a></li>
+                <li><a href="change_pro.php">Change Products</a></li>
             </ul>
         </aside>
         <section id="remove-product" class="dashboard-content">
@@ -85,9 +86,9 @@ if (isset($_POST['removeProduct'])) {
                 <h3>Product Details</h3>
                 <p id="productInfo"><?php echo $productInfo; ?></p>
 
-                <?php if ($productInfo && !strpos($productInfo, "No product found")): ?>
+                <?php if ($productInfo && !str_contains($productInfo, "No product found") && !str_contains($productInfo, "removed successfully")): ?>
                     <form method="POST" action="remove_pro.php">
-                        <input type="hidden" name="productNameToRemove" value="<?php echo $searchProductName; ?>">
+                        <input type="hidden" name="productNameToRemove" value="<?php echo htmlspecialchars($searchProductName); ?>">
                         <button type="submit" name="removeProduct">Remove Product</button>
                     </form>
                 <?php endif; ?>

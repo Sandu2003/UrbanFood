@@ -100,7 +100,7 @@ $orderList = [
     function navigateDashboard() {
         const selected = document.getElementById('dashboardSelect').value;
         if (selected === 'seller') {
-            window.location.href = 'add_product.php';
+            window.location.href = 'login.php';
         }
     }
 </script>
