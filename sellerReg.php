@@ -1,4 +1,7 @@
 <?php
+// Include database connection
+include 'connection.php'; 
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Sanitize and validate inputs
     $name = htmlspecialchars(trim($_POST['name']));
@@ -14,16 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit;
     }
 
-    // Connect to Oracle Database
-    $conn = oci_connect('C##urbanfood_user', 'password123', 'localhost/XE');
-
-    if (!$conn) {
-        $e = oci_error();
-        die('Connection failed: ' . $e['message']);
-    }
-
     // Check if the email already exists
-    $checkEmailQuery = "SELECT COUNT(*) FROM C##urbanfood_user.sellers WHERE email = :email";
+    $checkEmailQuery = "SELECT COUNT(*) FROM suppliers WHERE email = :email";
     $stmtCheckEmail = oci_parse($conn, $checkEmailQuery);
     oci_bind_by_name($stmtCheckEmail, ':email', $email);
     oci_execute($stmtCheckEmail);
@@ -37,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Check if the contact already exists
-    $checkContactQuery = "SELECT COUNT(*) FROM C##urbanfood_user.sellers WHERE contact = :contact";
+    $checkContactQuery = "SELECT COUNT(*) FROM suppliers WHERE contact = :contact";
     $stmtCheckContact = oci_parse($conn, $checkContactQuery);
     oci_bind_by_name($stmtCheckContact, ':contact', $contact);
     oci_execute($stmtCheckContact);
@@ -51,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Prepare and execute the stored procedure to insert the data
-    $sql = "BEGIN C##urbanfood_user.register_seller(:name, :email, :password, :business_name, :business_type, :contact, :address); END;";
+    $sql = "BEGIN register_supplier(:name, :email, :password, :business_name, :business_type, :contact, :address); END;";
     $stmt = oci_parse($conn, $sql);
 
     oci_bind_by_name($stmt, ':name', $name);
@@ -73,6 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     oci_close($conn);
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -90,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <main>
         <section id="register">
             <h2>Create a New Seller Account</h2>
-            <form id="register-form" method="POST" action="seller_register.php">
+            <form id="register-form" method="POST" action="sellerReg.php">
                 <input type="text" name="name" placeholder="Full Name" required>
                 <input type="email" name="email" placeholder="Email Address" required>
                 <input type="password" name="password" placeholder="Password" required>

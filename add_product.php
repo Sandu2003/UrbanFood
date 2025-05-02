@@ -91,7 +91,7 @@ while ($row = oci_fetch_assoc($stmt)) {
 <main>
     <aside class="side-nav">
         <ul>
-            <li><a href="Products_sell.php">Add Products</a></li>
+            <li><a href="add_product.php">Add Products</a></li>
             <li><a href="remove_pro.php">Remove Products</a></li>
             <li><a href="change_pro.php">Change Products</a></li>
         </ul>
@@ -156,6 +156,6 @@ while ($row = oci_fetch_assoc($stmt)) {
 <footer>
     <p>&copy; 2025 UrbanFood. All Rights Reserved.</p>
 </footer>
-<script src="script.js"></script>
+<script src="scriptr.js"></script>
 </body>
 </html>

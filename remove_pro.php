@@ -69,7 +69,7 @@ if (isset($_POST['removeProduct'])) {
     <main>
         <aside class="side-nav">
             <ul>
-                <li><a href="Products_sell.php">Add Products</a></li>
+                <li><a href="add_product.php">Add Products</a></li>
                 <li><a href="remove_pro.php">Remove Products</a></li>
                 <li><a href="change_pro.php">Change Products</a></li>
             </ul>

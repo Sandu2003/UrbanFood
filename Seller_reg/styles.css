@@ -3,80 +3,142 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-image: url(assets/farmers.jpg); /* Background image */
-    background-size: cover; /* Ensure the background image covers the full viewport */
+    background-image: url(assets/farmers.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 /* Header styling */
 header {
-    background-color: #00796b; /* Main green color */
+    background-color: #00796b;
     color: white;
     text-align: center;
     padding: 20px;
+    position: relative;
 }
 
+/* Back to Home link */
+.back-link {
+    position: absolute;
+    left: 20px;
+    top: 30px;
+    text-decoration: none;
+    background-color: white;
+    color: #00796b;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.back-link:hover {
+    background-color: #004d40;
+    color: white;
+}
+
+/* Logo */
 header img {
-    width: 100px;
+    height: 100px;
+    margin: 10px 0;
 }
 
-/* Main content styling */
+/* Main content */
 main {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 80vh;
+    padding: 20px;
 }
 
-/* Registration form styling */
+/* Registration form container */
 #register {
-    background: white;
+    background: rgba(255, 255, 255, 0.95);
     padding: 30px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
     width: 100%;
     max-width: 500px;
+    backdrop-filter: blur(5px);
 }
 
-/* Heading style for registration */
+/* Form title */
 h2 {
     text-align: center;
-    color: #333; /* Dark black text color */
+    color: #222;
+    margin-bottom: 20px;
 }
 
-/* Form input fields, select, and textarea styling */
-input, select, textarea, button {
+/* Inputs and buttons */
+input,
+select,
+textarea,
+button {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     margin: 10px 0;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 6px;
     font-size: 16px;
+    box-sizing: border-box;
 }
 
-/* Password input field styling */
+/* Mask password */
 input[type="password"] {
-    -webkit-text-security: disc; /* Secure password visibility */
+    -webkit-text-security: disc;
 }
 
-/* Button styling */
+/* Submit button */
 button {
-    background-color: #00796b; /* Main green color */
+    background-color: #00796b;
     color: white;
-    font-size: 16px;
-    cursor: pointer;
+    font-weight: bold;
     border: none;
-    border-radius: 4px;
+    transition: background-color 0.3s ease;
 }
 
-/* Button hover effect */
 button:hover {
-    background-color: #004d40; /* Darker green on hover */
+    background-color: #004d40;
 }
 
-/* Footer styling */
+/* Login redirect link */
+#register p {
+    text-align: center;
+    margin-top: 15px;
+}
+
+#register p a {
+    color: #00796b;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#register p a:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
 footer {
     text-align: center;
     padding: 10px;
-    background-color: #333; /* Light black color for footer */
+    background-color: #333;
     color: white;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+    header {
+        padding: 15px;
+    }
+
+    .back-link {
+        top: 20px;
+        left: 10px;
+        font-size: 14px;
+    }
+
+    #register {
+        padding: 20px;
+    }
 }

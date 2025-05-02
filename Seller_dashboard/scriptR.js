@@ -2,9 +2,9 @@
 function navigateDashboard() {
     const dashboard = document.getElementById("dashboardSelect").value;
     if (dashboard === "buyer") {
-        window.location.href = "buyer-dashboard.html";
+        window.location.href = "login.php";
     } else if (dashboard === "seller") {
-        window.location.href = "seller-dashboard.html";
+        window.location.href = "add_product.php";
     }
 }
 

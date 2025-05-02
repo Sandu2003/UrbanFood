@@ -16,7 +16,7 @@ body {
     position: relative; /* To position the login button */
     text-align: center;
     padding: 1rem 0; /* Reduce vertical padding to minimize gap */
-    background-color: #bff1d6;
+    background-color: #279785;
     color: white;
 }
 
@@ -117,7 +117,7 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    color: #b2dfdb;
+    color: #2b7468;
 }
 
 /* Dropdown Menu */

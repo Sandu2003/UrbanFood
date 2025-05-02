@@ -16,21 +16,22 @@ require 'connection.php';
 <!-- Header Section -->
 <header id="top-header">
     <h1>Welcome to UrbanFoods</h1>
-    <a href="login.php">
-        <button id="login-button">Login</button>
-    </a>
-    <a href="cart.php">
-        <button id="cart">Cart</button>
-    </a>
+
     <div id="logo-wrapper">
         <img src="assets/logo.png" alt="UrbanFood Logo" id="logo">
-        
     </div>
+    
     <div class="header-buttons">
-        <button onclick="location.href='Bregis.php'">Sign In as Buyer</button>
-        <button onclick="location.href='sellerReg.php'">Sign In as Seller</button>
+        <a href="cart.php">
+            <button id="cart">Cart</button>
+        </a>
+        <a href="invoices.php">
+            <button id="invoices">Invoices</button>
+        </a>
+        <a href="account_details.php">
+            <button id="account-details">Account Details</button>
+        </a>
     </div>
-
 </header>
 
 <!-- Navigation Bar -->
@@ -108,22 +109,22 @@ require 'connection.php';
     </section>
 
     <!-- Feedback Form -->
-
-<section id="feedback-section">
-    <h2>Leave Your Feedback</h2>
-    <form action="submit_feedback.php" method="POST">
-        <input type="text" name="name" placeholder="Your Name" required>
-        <input type="email" name="email" placeholder="Your Email" required>
-        <textarea name="message" rows="5" placeholder="Your Feedback" required></textarea>
-        <button type="submit">Submit Feedback</button>
-    </form>
-</section>
-
+    <section id="feedback-section">
+        <h2>Leave Your Feedback</h2>
+        <form action="submit_feedback.php" method="POST">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" rows="5" placeholder="Your Feedback" required></textarea>
+            <button type="submit">Submit Feedback</button>
+        </form>
+    </section>
+</main>
 
 <script src="home/scripts.js"></script>
+
 <footer>
-        <p>&copy; 2025 UrbanFood. All rights reserved.</p>
-    </footer>
+    <p>&copy; 2025 UrbanFood. All rights reserved.</p>
+</footer>
     
 </body>
 </html>
